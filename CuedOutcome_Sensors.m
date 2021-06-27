@@ -59,13 +59,21 @@ if S.GUI.Photometry || S.GUI.Wheel
     Nidaq_photometry('ini',ParamPC);
 end
 if S.GUI.Photometry
-    FigNidaq1=Online_PhotoPlot('ini','470');
+    FigPhoto1=Online_NidaqPlot('ini','470');
     if S.GUI.DbleFibers || S.GUI.Isobestic405 || S.GUI.RedChannel
-        FigNidaq2=Online_PhotoPlot('ini','channel2');
+        FigPhoto2=Online_NidaqPlot('ini','channel2');
     end
 end
 if S.GUI.Wheel
     FigWheel=Online_WheelPlot('ini');
+end
+
+%% Bonsai
+if S.GUI.Bonsai
+BpodSystem.Pause=1;
+disp('Adjust ROI and time to 15sec - resume when ready');
+success=Bpod2Bonsai_Sensors()
+HandlePauseCondition;
 end
 %% Main trial loop
 BpodSystem.Data.TrialTypes = []; % The trial type of each trial completed will be added here.
@@ -174,7 +182,7 @@ FigLick=Online_LickPlot('update',[],FigLick,currentOutcome,currentLickEvents);
 if S.GUI.Photometry
     [currentNidaq1, rawNidaq1]=Online_NidaqDemod(PhotoData(:,1),nidaq.LED1,S.GUI.LED1_Freq,S.GUI.LED1_Amp,S.Names.StateToZero{S.GUI.StateToZero});
     currentNidaq1=CuedOutcome_Sensors_VariableITIAVG(currentNidaq1);
-    FigNidaq1=Online_PhotoPlot('update',[],FigNidaq1,currentNidaq1,rawNidaq1);
+    FigPhoto1=Online_NidaqPlot('update',[],FigPhoto1,currentNidaq1,rawNidaq1);
     
     if S.GUI.Isobestic405 || S.GUI.DbleFibers || S.GUI.RedChannel
         if S.GUI.Isobestic405
@@ -185,7 +193,7 @@ if S.GUI.Photometry
         [currentNidaq2, rawNidaq2]=Online_NidaqDemod(Photo2Data(:,1),nidaq.LED2,S.GUI.LED1b_Freq,S.GUI.LED1b_Amp,S.Names.StateToZero{S.GUI.StateToZero});
         end
         currentNidaq2=CuedOutcome_Sensors_VariableITIAVG(currentNidaq2);
-        FigNidaq2=Online_PhotoPlot('update',[],FigNidaq2,currentNidaq2,rawNidaq2);
+        FigPhoto2=Online_NidaqPlot('update',[],FigPhoto2,currentNidaq2,rawNidaq2);
     end
 end
 
@@ -224,9 +232,9 @@ end
 try
     ChannelNames={'BLA - Sensor','TdTomato','VS - Sensor'};
     YPhoto=[S.GUI.NidaqMin S.GUI.NidaqMax];
-    Analysis=Analysis_Photometry_Launcher_PostRec(BpodSystem,ChannelNames,YPhoto);
+    Analysis=Analysis_Photometry_Launcher_PostRec(BpodSystem,ChannelNames,YPhoto,FigLick.water);
     % Figure handle is in Analysis.Figure.PostRec
-    AP_Sensors_Evernote(Analysis,FigLick.water)
+%     AP_Sensors_Evernote(Analysis,FigLick.water) authentification error
 catch
     disp('Post recording analysis failed - check whether analysis pipeline is present')
 end

@@ -7,11 +7,17 @@ global S
     S.Names.Rig=Param.rig;
 
 %% General Parameters    
-    S.GUI.Phase = 7;
+    S.GUI.Phase = 1;
     S.GUIMeta.Phase.Style='popupmenu';
     S.GUIMeta.Phase.String=S.Names.Phase;
     S.GUIPanels.Task={'Phase'};
     
+    S.GUI.Bonsai=1;
+    S.GUIMeta.Bonsai.Style='checkbox';
+    S.GUIMeta.Bonsai.String='Auto';
+    S.GUI.Optogenetic=0;
+    S.GUIMeta.Optogenetic.Style='checkbox';
+    S.GUIMeta.Optogenetic.String='Auto';
     S.GUI.Wheel=1;
     S.GUIMeta.Wheel.Style='checkbox';
     S.GUIMeta.Wheel.String='Auto';
@@ -27,8 +33,8 @@ global S
     S.GUI.RedChannel=0;
     S.GUIMeta.RedChannel.Style='checkbox';
     S.GUIMeta.RedChannel.String='Auto';    
-    S.GUIPanels.Recording={'Wheel','Photometry','DbleFibers','Isobestic405','RedChannel'};
-    
+    S.GUIPanels.Recording={'Bonsai','Optogenetic','Wheel','Photometry','DbleFibers','Isobestic405','RedChannel'};
+     
     S.GUI.TimeMin=-4;
     S.GUI.TimeMax=4;
     S.GUI.NidaqMin=-5;
