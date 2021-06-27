@@ -59,9 +59,9 @@ if S.GUI.Photometry || S.GUI.Wheel
     Nidaq_photometry('ini',ParamPC);
 end
 if S.GUI.Photometry
-    FigPhoto1=Online_NidaqPlot('ini','470');
+    FigPhoto1=Online_PhotoPlot('ini','470');
     if S.GUI.DbleFibers || S.GUI.Isobestic405 || S.GUI.RedChannel
-        FigPhoto2=Online_NidaqPlot('ini','channel2');
+        FigPhoto2=Online_PhotoPlot('ini','channel2');
     end
 end
 if S.GUI.Wheel
@@ -180,20 +180,20 @@ try
 FigLick=Online_LickPlot('update',[],FigLick,currentOutcome,currentLickEvents);
 
 if S.GUI.Photometry
-    [currentNidaq1, rawNidaq1]=Online_NidaqDemod(PhotoData(:,1),nidaq.LED1,S.GUI.LED1_Freq,S.GUI.LED1_Amp,S.Names.StateToZero{S.GUI.StateToZero});
+    [currentNidaq1, rawNidaq1]=Photometry_demod(PhotoData(:,1),nidaq.LED1,S.GUI.LED1_Freq,S.GUI.LED1_Amp,S.Names.StateToZero{S.GUI.StateToZero});
     currentNidaq1=CuedOutcome_Sensors_VariableITIAVG(currentNidaq1);
-    FigPhoto1=Online_NidaqPlot('update',[],FigPhoto1,currentNidaq1,rawNidaq1);
+    FigPhoto1=Online_PhotoPlot('update',[],FigPhoto1,currentNidaq1,rawNidaq1);
     
     if S.GUI.Isobestic405 || S.GUI.DbleFibers || S.GUI.RedChannel
         if S.GUI.Isobestic405
-        [currentNidaq2, rawNidaq2]=Online_NidaqDemod(PhotoData(:,1),nidaq.LED2,S.GUI.LED2_Freq,S.GUI.LED2_Amp,S.Names.StateToZero{S.GUI.StateToZero});
+        [currentNidaq2, rawNidaq2]=Photometry_demod(PhotoData(:,1),nidaq.LED2,S.GUI.LED2_Freq,S.GUI.LED2_Amp,S.Names.StateToZero{S.GUI.StateToZero});
         elseif S.GUI.RedChannel
-        [currentNidaq2, rawNidaq2]=Online_NidaqDemod(Photo2Data(:,1),nidaq.LED2,S.GUI.LED2_Freq,S.GUI.LED2_Amp,S.Names.StateToZero{S.GUI.StateToZero});
+        [currentNidaq2, rawNidaq2]=Photometry_demod(Photo2Data(:,1),nidaq.LED2,S.GUI.LED2_Freq,S.GUI.LED2_Amp,S.Names.StateToZero{S.GUI.StateToZero});
         elseif S.GUI.DbleFibers
-        [currentNidaq2, rawNidaq2]=Online_NidaqDemod(Photo2Data(:,1),nidaq.LED2,S.GUI.LED1b_Freq,S.GUI.LED1b_Amp,S.Names.StateToZero{S.GUI.StateToZero});
+        [currentNidaq2, rawNidaq2]=Photometry_demod(Photo2Data(:,1),nidaq.LED2,S.GUI.LED1b_Freq,S.GUI.LED1b_Amp,S.Names.StateToZero{S.GUI.StateToZero});
         end
         currentNidaq2=CuedOutcome_Sensors_VariableITIAVG(currentNidaq2);
-        FigPhoto2=Online_NidaqPlot('update',[],FigPhoto2,currentNidaq2,rawNidaq2);
+        FigPhoto2=Online_PhotoPlot('update',[],FigPhoto2,currentNidaq2,rawNidaq2);
     end
 end
 
