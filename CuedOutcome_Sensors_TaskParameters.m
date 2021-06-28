@@ -12,7 +12,7 @@ global S
     S.GUIMeta.Phase.String=S.Names.Phase;
     S.GUIPanels.Task={'Phase'};
     
-    S.GUI.Bonsai=1;
+    S.GUI.Bonsai=0;
     S.GUIMeta.Bonsai.Style='checkbox';
     S.GUIMeta.Bonsai.String='Auto';
     S.GUI.Optogenetic=0;
