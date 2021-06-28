@@ -201,8 +201,8 @@ end
 end
 %% Add killer script + sarah's behavior QC code here + Quick Analysis
 try
-    ChannelNames={'BLA - Sensor''VS - Sensor'};
-    AP_Launcher_PostRec(BpodSystem,ChannelNames,FigLick.water)
+    ChannelNames={'BLA' 'VS'};
+    AP_Launcher_PostRec(BpodSystem,ChannelNames)
     % Figure handle is in Analysis.Figure.PostRec
 %     AP_Sensors_Evernote(Analysis,FigLick.water) authentification error
 catch
