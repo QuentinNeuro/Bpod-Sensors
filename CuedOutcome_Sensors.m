@@ -170,7 +170,7 @@ end
 try
 [currentOutcome, currentLickEvents]=Online_LickEvents(S.Names.StateToZero{S.GUI.StateToZero});
 FigLick=Online_LickPlot('update',[],FigLick,currentOutcome,currentLickEvents);
-[FigPhoto1,FigPhoto2,FigWheel]=Nidaq_Plots('update',FigPhoto1,FigPhoto2,FigWheel,'PreState');
+[FigPhoto1,FigPhoto2,FigWheel]=Nidaq_Plots('update',FigPhoto1,FigPhoto2,FigWheel,'PreState',currentLickEvents);
 catch
     disp('Oups, something went wrong with the online analysis... May be you closed a plot ?') 
 end
