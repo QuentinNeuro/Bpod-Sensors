@@ -58,15 +58,7 @@ if S.GUI.Photometry || S.GUI.Wheel
     end
     Nidaq_photometry('ini',ParamPC);
 end
-if S.GUI.Photometry
-    FigPhoto1=Online_PhotoPlot('ini','470');
-    if S.GUI.DbleFibers || S.GUI.Isobestic405 || S.GUI.RedChannel
-        FigPhoto2=Online_PhotoPlot('ini','channel2');
-    end
-end
-if S.GUI.Wheel
-    FigWheel=Online_WheelPlot('ini');
-end
+[FigPhoto1,FigPhoto2,FigWheel]=Nidaq_Plots('ini');
 
 %% Bonsai
 if S.GUI.Bonsai
@@ -178,28 +170,7 @@ end
 try
 [currentOutcome, currentLickEvents]=Online_LickEvents(S.Names.StateToZero{S.GUI.StateToZero});
 FigLick=Online_LickPlot('update',[],FigLick,currentOutcome,currentLickEvents);
-
-if S.GUI.Photometry
-    [currentNidaq1, rawNidaq1]=Photometry_demod(PhotoData(:,1),nidaq.LED1,S.GUI.LED1_Freq,S.GUI.LED1_Amp,S.Names.StateToZero{S.GUI.StateToZero});
-    currentNidaq1=CuedOutcome_Sensors_VariableITIAVG(currentNidaq1);
-    FigPhoto1=Online_PhotoPlot('update',[],FigPhoto1,currentNidaq1,rawNidaq1);
-    
-    if S.GUI.Isobestic405 || S.GUI.DbleFibers || S.GUI.RedChannel
-        if S.GUI.Isobestic405
-        [currentNidaq2, rawNidaq2]=Photometry_demod(PhotoData(:,1),nidaq.LED2,S.GUI.LED2_Freq,S.GUI.LED2_Amp,S.Names.StateToZero{S.GUI.StateToZero});
-        elseif S.GUI.RedChannel
-        [currentNidaq2, rawNidaq2]=Photometry_demod(Photo2Data(:,1),nidaq.LED2,S.GUI.LED2_Freq,S.GUI.LED2_Amp,S.Names.StateToZero{S.GUI.StateToZero});
-        elseif S.GUI.DbleFibers
-        [currentNidaq2, rawNidaq2]=Photometry_demod(Photo2Data(:,1),nidaq.LED2,S.GUI.LED1b_Freq,S.GUI.LED1b_Amp,S.Names.StateToZero{S.GUI.StateToZero});
-        end
-        currentNidaq2=CuedOutcome_Sensors_VariableITIAVG(currentNidaq2);
-        FigPhoto2=Online_PhotoPlot('update',[],FigPhoto2,currentNidaq2,rawNidaq2);
-    end
-end
-
-if S.GUI.Wheel
-    FigWheel=Online_WheelPlot('update',FigWheel,WheelData,S.Names.StateToZero{S.GUI.StateToZero},currentTrial,currentLickEvents);
-end
+[FigPhoto1,FigPhoto2,FigWheel]=Nidaq_Plots('update',FigPhoto1,FigPhoto2,FigWheel,'PreState');
 catch
     disp('Oups, something went wrong with the online analysis... May be you closed a plot ?') 
 end
@@ -230,9 +201,8 @@ end
 end
 %% Add killer script + sarah's behavior QC code here + Quick Analysis
 try
-    ChannelNames={'BLA - Sensor','TdTomato','VS - Sensor'};
-    YPhoto=[S.GUI.NidaqMin S.GUI.NidaqMax];
-    Analysis=Analysis_Photometry_Launcher_PostRec(BpodSystem,ChannelNames,YPhoto,FigLick.water);
+    ChannelNames={'BLA - Sensor''VS - Sensor'};
+    AP_Launcher_PostRec(BpodSystem,ChannelNames,FigLick.water)
     % Figure handle is in Analysis.Figure.PostRec
 %     AP_Sensors_Evernote(Analysis,FigLick.water) authentification error
 catch
