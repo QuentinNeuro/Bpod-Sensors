@@ -1,7 +1,7 @@
 function success =Bpod2Bonsai_Sensors()
 global BpodSystem
 %% Bonsai exe and protocol location
-bonsaiEXE_Path='C:\Users\kepecs\AppData\Local\Bonsai\Bonsai.exe';
+bonsaiEXE_Path='C:\Users\kepecs\AppData\Local\Bonsai\Bonsai32.exe';
 bonsaiPro_Path='C:\Users\kepecs\Documents\Data\Sensors\Bonsai\Pupillometry_trigger.bonsai';
 %% From Bpod
 DataPath=BpodSystem.DataPath;
