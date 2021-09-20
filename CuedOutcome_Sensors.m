@@ -62,10 +62,10 @@ end
 
 %% Bonsai
 if S.GUI.Bonsai
-BpodSystem.Pause=1;
-disp('Adjust ROI and time to 15sec - resume when ready');
-success=Bpod2Bonsai_Sensors()
-HandlePauseCondition;
+    BpodSystem.Pause=1;
+    disp('Adjust ROI  - resume when ready');
+    success=Bpod2Bonsai_Sensors()
+    HandlePauseCondition;
 end
 %% Main trial loop
 BpodSystem.Data.TrialTypes = []; % The trial type of each trial completed will be added here.
