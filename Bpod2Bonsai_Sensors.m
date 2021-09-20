@@ -11,7 +11,7 @@ SessionNb=FileName(end-7:end);
 ProtoName=DataPath_split{end-2};
 AnimalName=DataPath_split{end-3};
 thisDate=datestr(now,'yyyymmdd');
-trialDuration = seconds(S.GUI.NidaqDuration);
+trialDuration = 20;
 trialDuration.Format = 'hh:mm:ss';
 trialDuration = sprintf('%s', trialDuration);
 %% Directory
